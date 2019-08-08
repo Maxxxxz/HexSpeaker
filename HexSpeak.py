@@ -20,7 +20,7 @@ def hexify(lines):
 
     # compile regexes
     res = []
-    res.append(re.compile("[hjkmnpqruvwxyz]"))
+    res.append(re.compile("(?i)([hjkmnpqruvwxyz])"))
     res.append(re.compile(r"(O|o)",))
     res.append(re.compile(r"(I|L|i|l)"))
     res.append(re.compile(r"(S|s)"))
@@ -32,9 +32,7 @@ def hexify(lines):
     newlines = []
 
     for line in lines:
-        # remove line from list if it contains illegal characters that can not be converted
-        match = res[0].search(line, re.IGNORECASE)
-        if not match:
+        if res[0].search(line, re.IGNORECASE) is None:
             line = res[1].sub("0", line)
             line = res[2].sub("1", line)
             line = res[3].sub("5", line)
